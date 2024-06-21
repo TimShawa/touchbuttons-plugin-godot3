@@ -35,7 +35,6 @@ func _draw() -> void:
 	_n_hbox().add_constant_override("separation", _get_button_constant("h_separation", _theme_type))
 	
 	_n_text().add_font_override("font", _get_button_font("font", _theme_type))
-	_n_text().add_color_override("font_outline_color", _get_button_color("font_outline_color", _theme_type))
 	_n_text().text = self.text
 	_n_text().align = self.align
 	_n_text().clip_text = self.clip_text

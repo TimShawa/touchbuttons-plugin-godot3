@@ -1,11 +1,9 @@
-icon.svg
-icon.svg.import
-default_env.tres
-addons/explore-editor-theme
+icon.png
+icon.png.import
+Control.tscn
 addons/godunity_theme
-addons/post_processing
 project.godot
-project_theme.tres
+addons/touch_buttons/buttons_theme.tres
 
 # Godot 4+ specific ignores
 .godot/

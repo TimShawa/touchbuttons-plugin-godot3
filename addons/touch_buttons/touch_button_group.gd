@@ -4,13 +4,24 @@ class_name TouchButtonGroup extends Resource
 
 signal pressed(button)
 
-var allow_unpress := false
+
+var allow_unpress := false setget set_allow_unpress, get_allow_unpress
+
 
 func _get_property_list():
 	return [
 		{ name = "TouchButtonBase", type = TYPE_NIL, usage = PROPERTY_USAGE_CATEGORY },
 		{ name = "allow_unpress", type = TYPE_BOOL }
 	]
+
+
+func set_allow_unpress(value):
+	allow_unpress = value
+
+
+func get_allow_unpress():
+	return allow_unpress
+
 
 var _buttons := []
 

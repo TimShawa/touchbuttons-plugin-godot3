@@ -71,7 +71,7 @@ func _draw() -> void:
 	
 	
 	var item := "checked" if button_pressed else "unchecked"
-	if is_instance_valid(group):
+	if is_instance_valid(button_group):
 		item = "radio_" + item
 	if disabled:
 		item += "_disabled"
@@ -79,8 +79,11 @@ func _draw() -> void:
 
 
 func _get_minimum_size() -> Vector2:
-	if !is_instance_valid(_n_check()): return Vector2.ZERO
 	var size = ._get_minimum_size()
+	
+	if !is_instance_valid(_n_check()) \
+			or !is_instance_valid(_n_check().texture):
+		return size
 	
 	var stylebox: StyleBox = _n_panel().get_stylebox("panel","PanelContainer")
 	var border := stylebox.content_margin_top + stylebox.content_margin_bottom

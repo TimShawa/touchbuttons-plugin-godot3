@@ -1,15 +1,18 @@
 tool
 class_name TouchButton extends TouchBaseButton
 
+
 enum TextAlign { ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT }
 
-var text := "" setget set_text
-var icon: Texture setget set_icon
-var flat := false setget set_flat
-var clip_text := false setget set_clip_text
-var align: int = TextAlign.ALIGN_CENTER setget set_align
-var icon_align: int = TextAlign.ALIGN_LEFT setget set_icon_align
-var expand_icon := false setget set_expand_icon
+
+var text := "" setget set_text, get_text
+var icon: Texture setget set_icon, get_icon_texture
+var flat := false setget set_flat, is_flat
+var clip_text := false setget set_clip_text, get_clip_text
+var align: int = TextAlign.ALIGN_CENTER setget set_align, get_align
+var icon_align: int = TextAlign.ALIGN_LEFT setget set_icon_align, get_icon_align
+var expand_icon := false setget set_expand_icon, is_expand_icon
+
 
 func _get_property_list():
 	return [
@@ -23,10 +26,12 @@ func _get_property_list():
 		{ name = "expand_icon", type = TYPE_BOOL }
 	]
 
+
 var _theme_type := "TouchButton"
 var _buttons_theme = load("res://addons/touch_buttons/buttons.theme")
 
-# == Property Setters ====
+
+#region SETGET
 
 func set_text(value):
 	text = value; update()
@@ -47,7 +52,23 @@ func set_expand_icon(value):
 	rect_size.y = max(rect_size.y, get_combined_minimum_size().y)
 	update()
 
-# ========================'1
+
+func get_text():
+	return text
+func get_icon_texture():
+	return icon
+func is_flat():
+	return flat
+func get_clip_text():
+	return clip_text
+func get_align():
+	return align
+func get_icon_align():
+	return icon_align
+func is_expand_icon():
+	return expand_icon
+
+#endregion
 
 
 func _ready() -> void:

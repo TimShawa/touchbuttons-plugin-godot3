@@ -1,7 +1,6 @@
 tool
 class_name TouchTextureButton extends TouchBaseButton
 
-
 enum StretchMode {
 	STRETCH_SCALE,
 	STRETCH_TILE,
@@ -12,15 +11,15 @@ enum StretchMode {
 	STRETCH_KEEP_ASPECT_COVERED
 }
 
-var expand := false setget set_expand
-var stretch_mode: int = StretchMode.STRETCH_SCALE
-var flip_h := false
-var flip_v := false
+var expand := false setget set_expand, get_expand
+var stretch_mode: int = StretchMode.STRETCH_SCALE setget set_stretch_mode, get_stretch_mode
+var flip_h := false setget set_flip_h, is_flipped_h
+var flip_v := false setget set_flip_v, is_flipped_v
 
-var texture_normal: Texture setget set_texture_normal
-var texture_pressed: Texture setget set_texture_pressed
-var texture_disabled: Texture setget set_texture_disabled
-var texture_click_mask: BitMap setget set_texture_click_mask
+var texture_normal: Texture setget set_texture_normal, get_texture_normal
+var texture_pressed: Texture setget set_texture_pressed, get_texture_pressed
+var texture_disabled: Texture setget set_texture_disabled, get_texture_disabled
+var texture_click_mask: BitMap setget set_texture_click_mask, get_texture_click_mask
 
 func _get_property_list():
 	return [
@@ -41,11 +40,23 @@ var _position_rect := Rect2()
 var _tile := false
 
 
-# == Property Setters ====
+#region SETGET
 
 func set_expand(value):
 	expand = value
 	minimum_size_changed()
+
+
+func set_stretch_mode(value):
+	stretch_mode = value
+
+
+func set_flip_h(value):
+	flip_h = value
+
+
+func set_flip_v(value):
+	flip_v = value
 
 
 func set_texture_normal(value):
@@ -67,7 +78,31 @@ func set_texture_click_mask(value):
 	texture_click_mask = value
 	_texture_changed()
 
-# ==============
+
+func get_expand():
+	return expand
+func get_stretch_mode():
+	return stretch_mode
+func is_flipped_h():
+	return flip_h
+func is_flipped_v():
+	return flip_v
+func get_texture_normal():
+	return texture_normal
+func get_texture_pressed():
+	return texture_pressed
+func get_texture_disabled():
+	return texture_disabled
+func get_texture_click_mask():
+	return texture_click_mask
+
+#endregion
+
+
+func _get_stretch_mode():
+	if expand:
+		return stretch_mode
+	return StretchMode.STRETCH_KEEP
 
 
 func _notification(p_what: int) -> void:
@@ -101,7 +136,7 @@ func _notification(p_what: int) -> void:
 				size = texdraw.get_size()
 				_texture_region = Rect2(Vector2(), texdraw.get_size())
 				_tile = false
-				match self.stretch_mode:
+				match _get_stretch_mode():
 					StretchMode.STRETCH_KEEP:
 						size = texdraw.get_size()
 					StretchMode.STRETCH_SCALE:
@@ -196,7 +231,7 @@ func has_point(p_point: Vector2):
 		else:
 			var ofs: Vector2 = _position_rect.position
 			var scale: Vector2 = mask_size / _position_rect.size
-			if stretch_mode == StretchMode.STRETCH_KEEP_ASPECT_COVERED:
+			if _get_stretch_mode() == StretchMode.STRETCH_KEEP_ASPECT_COVERED:
 				var _min = min(scale.x, scale.y)
 				scale.x = _min
 				scale.y = _min

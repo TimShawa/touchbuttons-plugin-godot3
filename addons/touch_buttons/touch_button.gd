@@ -135,7 +135,6 @@ func _draw() -> void:
 				_n_icon().self_modulate = get_theme_item("color", "icon_color_normal", _theme_type)
 			_n_text().add_color_override("font_color", get_theme_item("color", "font_color", _theme_type))
 		DrawMode.DRAW_HOVER:
-			return
 			_n_panel().add_stylebox_override("panel", get_theme_item("stylebox", "hover", _theme_type))
 			if has_theme_item("color", "icon_color_hover", _theme_type):
 				_n_icon().self_modulate = get_theme_item("color", "icon_color_hover", _theme_type)

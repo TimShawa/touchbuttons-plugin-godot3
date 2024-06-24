@@ -1,5 +1,5 @@
 # touchbuttons-plugin-godot3
-This plugin for Godot Engine 3.x adds TouchBaseButton class and its subclasses. TouchButtons are roughly similar to its native BaseButton-deriver buttons but have some differences, such as:
+This plugin for Godot Engine 3.x adds TouchBaseButton class and its subclasses. TouchButtons are roughly similar to its native BaseButton-derived buttons but have some differences, such as:
 
 - Most valuable difference: TouchButtons support multitouch.
 - There's no support of shortcuts, but it might be added in the future.

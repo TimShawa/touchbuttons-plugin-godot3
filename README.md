@@ -11,8 +11,6 @@ Most of buttons functionality can be found in the native Buttons docs. There is 
 - Pass Screen Drag (in "click" press mode): Button forwards any recieved screen drag input event with `drag_input` signal.
 - TouchButtons use **TouchButtonGroup**s instead of native ButtonGroup resource, because ButtonGroups support only built-in Buttons.
 
-**Note:** *In the plugin version for Godot 3.x mouse responsibility is kinda wierd in visual and also perhaps in behavior. This issue have not been noticed in the version for Godot 4.*
-
 ## Added items:
 - **TouchBaseButton**: base for all touchscreen buttons
 - **TouchGroupButton**: resource for setup touchscreen buttons as radio

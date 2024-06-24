@@ -100,9 +100,9 @@ func _draw() -> void:
 	
 	_n_panel().self_modulate = Color.transparent if flat else Color.white
 	
-	_n_hbox().add_constant_override("separation", _get_button_constant("h_separation", _theme_type))
+	_n_hbox().add_constant_override("separation", get_theme_item("constant", "hseparation", _theme_type))
 	
-	_n_text().add_font_override("font", _get_button_font("font", _theme_type))
+	_n_text().add_font_override("font", get_theme_item("font", "font", _theme_type))
 	_n_text().text = self.text
 	_n_text().align = self.align
 	_n_text().clip_text = self.clip_text
@@ -110,9 +110,9 @@ func _draw() -> void:
 	if is_instance_valid(icon):
 		_n_icon().show()
 		_n_icon().texture = self.icon
-	elif _has_theme_icon("icon", _theme_type):
+	elif has_theme_item("icon", "icon", _theme_type):
 		_n_icon().show()
-		_n_icon().texture = _get_button_icon("icon", _theme_type)
+		_n_icon().texture = get_theme_item("icon", "icon", _theme_type)
 	else:
 		_n_icon().hide()
 	
@@ -123,19 +123,41 @@ func _draw() -> void:
 		_n_icon().expand = true
 		_n_icon().stretch_mode = TextureRect.STRETCH_KEEP
 	
+	if has_focus():
+		var style: StyleBox = get_theme_item("stylebox", "focus", _theme_type)
+		if is_instance_valid(style):
+			style.draw(get_canvas_item(), Rect2(Vector2.ZERO, rect_size))
+	
 	match get_draw_mode():
 		DrawMode.DRAW_NORMAL:
-			_n_panel().add_stylebox_override("panel", _get_button_stylebox("normal", _theme_type))
-			_n_icon().self_modulate = _get_button_color("icon_color_normal", _theme_type)
-			_n_text().add_color_override("font_color", _get_button_color("font_color", _theme_type))
+			_n_panel().add_stylebox_override("panel", get_theme_item("stylebox", "normal", _theme_type))
+			if has_theme_item("color", "icon_color_normal", _theme_type):
+				_n_icon().self_modulate = get_theme_item("color", "icon_color_normal", _theme_type)
+			_n_text().add_color_override("font_color", get_theme_item("color", "font_color", _theme_type))
+		DrawMode.DRAW_HOVER:
+			return
+			_n_panel().add_stylebox_override("panel", get_theme_item("stylebox", "hover", _theme_type))
+			if has_theme_item("color", "icon_color_hover", _theme_type):
+				_n_icon().self_modulate = get_theme_item("color", "icon_color_hover", _theme_type)
+			_n_text().add_color_override("font_color", get_theme_item("color", "font_color_hover", _theme_type))
 		DrawMode.DRAW_PRESSED:
-			_n_panel().add_stylebox_override("panel", _get_button_stylebox("pressed", _theme_type))
-			_n_icon().self_modulate = _get_button_color("icon_color_pressed")
-			_n_text().add_color_override("font_color", _get_button_color("font_color_pressed", _theme_type))
+			_n_panel().add_stylebox_override("panel", get_theme_item("stylebox", "pressed", _theme_type))
+			if has_theme_item("color", "icon_color_pressed", _theme_type):
+				_n_icon().self_modulate = get_theme_item("color", "icon_color_pressed", _theme_type)
+			_n_text().add_color_override("font_color", get_theme_item("color", "font_color_pressed", _theme_type))
 		DrawMode.DRAW_DISABLED:
-			_n_panel().add_stylebox_override("panel", _get_button_stylebox("disabled", _theme_type))
-			_n_icon().self_modulate = _get_button_color("icon_color_disabled")
-			_n_text().add_color_override("font_color", _get_button_color("font_color_disabled", _theme_type))
+			_n_panel().add_stylebox_override("panel", get_theme_item("stylebox", "disabled", _theme_type))
+			if has_theme_item("color", "icon_color_disabled", _theme_type):
+				_n_icon().self_modulate = get_theme_item("color", "icon_color_disabled", _theme_type)
+			_n_text().add_color_override("font_color", get_theme_item("color", "font_color_disabled", _theme_type))
+		DrawMode.DRAW_HOVER_PRESSED:
+			if has_theme_item("stylebox", "hover_pressed", _theme_type):
+				_n_panel().add_stylebox_override("panel", get_theme_item("stylebox", "hover_pressed", _theme_type))
+			else:
+				_n_panel().add_stylebox_override("panel", get_theme_item("stylebox", "pressed", _theme_type))
+			if has_theme_item("color", "icon_color_hover_pressed", _theme_type):
+				_n_icon().self_modulate = get_theme_item("color", "icon_color_hover_pressed", _theme_type)
+			_n_text().add_color_override("font_color", get_theme_item("color", "font_color_hover_pressed", _theme_type))
 
 
 func _notification(what: int) -> void:
@@ -145,43 +167,22 @@ func _notification(what: int) -> void:
 
 
 func _n_panel() -> Node:
-	if has_node("__button_panel"):
-		return $__button_panel
-#	push_error("There is no __button_panel node.")
-	return null
-
-
+	return get_node_or_null("__button_panel")
 func _n_hbox() -> Node:
-	if has_node("__button_panel/HBoxContainer"):
-		return $__button_panel/HBoxContainer
-	return null
-
-
+	return get_node_or_null("__button_panel/HBoxContainer")
 func _n_control() -> Node:
-	if has_node("__button_panel/HBoxContainer/Control"):
-		return $__button_panel/HBoxContainer/Control
-	return null
-
-
+	return get_node_or_null("__button_panel/HBoxContainer/Control")
 func _n_icon() -> Node:
-	if has_node("__button_panel/HBoxContainer/Control/TextureRect"):
-		return $__button_panel/HBoxContainer/Control/TextureRect
-#	push_error("There is no __button_panel/HBoxContainer/TextureRect node.")
-	return null
-
-
+	return get_node_or_null("__button_panel/HBoxContainer/Control/TextureRect")
 func _n_text() -> Node:
-	if has_node("__button_panel/HBoxContainer/Control/Label"):
-		return $__button_panel/HBoxContainer/Control/Label
-#	push_error("There is no __button_panel/HBoxContainer/Label node.")
-	return null
+	return get_node_or_null("__button_panel/HBoxContainer/Control/Label")
 
 
 func _update_controls_size():
 	_n_panel().rect_size = rect_size
 	minimum_size_changed()
 	
-	var sep: int = _get_button_constant("h_separation", _theme_type)
+	var sep: int = get_theme_item("constant", "hseparation", _theme_type)
 	var con_size: Vector2 = _n_control().rect_size
 	
 	if !_n_icon().visible or _n_icon().texture == null:
@@ -221,7 +222,7 @@ func _get_minimum_size() -> Vector2:
 	if !is_node_ready():
 		return Vector2.ZERO
 	
-	var separation = _get_button_constant("h_separation", _theme_type)
+	var separation = get_theme_item("constant", "hseparation", _theme_type)
 	var stylebox: StyleBox = _n_panel().get_stylebox("panel","PanelContainer")
 	var borders := Vector2(
 		stylebox.content_margin_left + stylebox.content_margin_right,
@@ -248,56 +249,53 @@ func _get_minimum_size() -> Vector2:
 	return min_size
 
 
-func _get_button_color(name: String, theme_type: String = _theme_type) -> Color:
+func get_theme_item(item: String, name: String, theme_type: String = ""):
 	if !theme_type_variation.empty():
 		theme_type = theme_type_variation
-	if is_instance_valid(theme):
-		if theme.has_color(name, theme_type):
-			return theme.get_color(name, theme_type)
-	return _buttons_theme.get_color(name, theme_type)
-
-
-func _get_button_constant(name: String, theme_type: String = _theme_type) -> int:
-	if !theme_type_variation.empty():
-		theme_type = theme_type_variation
-	if is_instance_valid(theme):
-		if theme.has_constant(name, theme_type):
-			return theme.get_constant(name, theme_type)
-	return _buttons_theme.get_constant(name, theme_type)
-
-
-func _get_button_font(name: String, theme_type: String = _theme_type) -> Font:
-	if !theme_type_variation.empty():
-		theme_type = theme_type_variation
-	if is_instance_valid(theme):
-		if theme.has_font(name, theme_type):
-			return theme.get_font(name, theme_type)
-	return _buttons_theme.get_font(name, theme_type)
-
-
-func _get_button_icon(name: String, theme_type: String = _theme_type) -> Texture:
-	if !theme_type_variation.empty():
-		theme_type = theme_type_variation
-	if is_instance_valid(theme):
-		if theme.has_icon(name, theme_type):
-			return theme.get_icon(name, theme_type)
-	return _buttons_theme.get_icon(name, theme_type)
-
-
-func _get_button_stylebox(name: String, theme_type: String = _theme_type) -> StyleBox:
-	if !theme_type_variation.empty():
-		theme_type = theme_type_variation
-	if is_instance_valid(theme):
-		if theme.has_stylebox(name, theme_type):
-			return theme.get_stylebox(name, theme_type)
-	return _buttons_theme.get_stylebox(name, theme_type)
-
-
-func _has_theme_icon(name, theme_type):
-	if !theme_type_variation.empty():
-		theme_type = theme_type_variation
-	if is_instance_valid(theme):
-		if theme.has_icon(name, theme_type):
-			return true
-	return _buttons_theme.has_icon(name, theme_type)
 	
+	var data_type
+	match item:
+		"color":
+			data_type = Theme.DATA_TYPE_COLOR
+		"constant":
+			data_type = Theme.DATA_TYPE_CONSTANT
+		"font":
+			data_type = Theme.DATA_TYPE_FONT
+		"icon":
+			data_type = Theme.DATA_TYPE_ICON
+		"stylebox":
+			data_type = Theme.DATA_TYPE_STYLEBOX
+	
+	if theme and theme.has_theme_item(data_type, name, theme_type):
+		return theme.get_theme_item(data_type, name, theme_type)
+	elif _buttons_theme.has_theme_item(data_type, name, theme_type):
+		return _buttons_theme.get_theme_item(data_type, name, theme_type)
+	
+	return null
+
+
+func has_theme_item(item: String, name: String, theme_type: String = ""):
+	if !theme_type_variation.empty():
+		theme_type = theme_type_variation
+	
+	var data_type
+	match item:
+		"color":
+			data_type = Theme.DATA_TYPE_COLOR
+		"constant":
+			data_type = Theme.DATA_TYPE_CONSTANT
+		"font":
+			data_type = Theme.DATA_TYPE_FONT
+		"icon":
+			data_type = Theme.DATA_TYPE_ICON
+		"stylebox":
+			data_type = Theme.DATA_TYPE_STYLEBOX
+	
+	if theme:
+		return theme.has_theme_item(data_type, name, theme_type)
+	
+	return _buttons_theme.has_theme_item(data_type, name, theme_type)
+
+
+func _init(text := ""):
+	set_text(text)

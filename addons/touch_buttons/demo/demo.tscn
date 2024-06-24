@@ -49,21 +49,23 @@ margin_left = 280.0
 margin_right = 548.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 134, 7 )
+focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 3 )
 disabled = false
-toggle_mode = false
+press_mode = 0
 button_pressed = false
 action_mode = 1
-passby_press = false
 pass_screen_drag = false
+mouse_enabled = true
+mouse_button_mask = 1
 button_group = null
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer/TouchBaseButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-text = "TouchButton"
+text = "TouchBaseButton"
 align = 1
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
@@ -93,6 +95,7 @@ margin_left = 280.0
 margin_right = 548.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 134, 10 )
+focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
@@ -104,11 +107,12 @@ align = 1
 icon_align = 0
 expand_icon = false
 disabled = false
-toggle_mode = false
+press_mode = 0
 button_pressed = false
 action_mode = 1
-passby_press = false
 pass_screen_drag = false
+mouse_enabled = true
+mouse_button_mask = 1
 button_group = null
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer"]
@@ -138,6 +142,7 @@ margin_left = 280.0
 margin_right = 548.0
 margin_bottom = 24.0
 rect_pivot_offset = Vector2( 134, 12 )
+focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 2 )
@@ -149,11 +154,12 @@ align = 0
 icon_align = 0
 expand_icon = false
 disabled = false
-toggle_mode = true
+press_mode = 1
 button_pressed = false
 action_mode = 1
-passby_press = false
 pass_screen_drag = false
+mouse_enabled = true
+mouse_button_mask = 1
 button_group = null
 
 [node name="HSeparator3" type="HSeparator" parent="Panel/VBoxContainer"]
@@ -182,6 +188,7 @@ margin_left = 280.0
 margin_right = 548.0
 margin_bottom = 40.0
 rect_pivot_offset = Vector2( 134, 20 )
+focus_mode = 2
 size_flags_horizontal = 3
 script = ExtResource( 4 )
 text = "TouchCheckButton"
@@ -192,11 +199,12 @@ align = 0
 icon_align = 0
 expand_icon = false
 disabled = false
-toggle_mode = true
+press_mode = 1
 button_pressed = false
 action_mode = 1
-passby_press = false
 pass_screen_drag = false
+mouse_enabled = true
+mouse_button_mask = 1
 button_group = null
 
 [node name="HSeparator4" type="HSeparator" parent="Panel/VBoxContainer"]
@@ -265,6 +273,7 @@ margin_top = 7.0
 margin_right = 261.0
 margin_bottom = 47.0
 rect_pivot_offset = Vector2( 127, 20 )
+focus_mode = 2
 script = ExtResource( 5 )
 expand = true
 stretch_mode = 6
@@ -272,14 +281,17 @@ flip_h = false
 flip_v = false
 texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 6 )
+texture_hover = null
 texture_disabled = null
+texture_focused = null
 texture_click_mask = null
 disabled = false
-toggle_mode = false
+press_mode = 0
 button_pressed = false
 action_mode = 1
-passby_press = false
 pass_screen_drag = false
+mouse_enabled = true
+mouse_button_mask = 1
 button_group = null
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer5/VBoxContainer2"]

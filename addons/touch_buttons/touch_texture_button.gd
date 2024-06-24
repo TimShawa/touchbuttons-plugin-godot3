@@ -17,8 +17,10 @@ var flip_h := false setget set_flip_h, is_flipped_h
 var flip_v := false setget set_flip_v, is_flipped_v
 
 var texture_normal: Texture setget set_texture_normal, get_texture_normal
+var texture_hover: Texture setget set_texture_hover, get_texture_hover
 var texture_pressed: Texture setget set_texture_pressed, get_texture_pressed
 var texture_disabled: Texture setget set_texture_disabled, get_texture_disabled
+var texture_focused: Texture setget set_texture_focused, get_texture_focused
 var texture_click_mask: BitMap setget set_texture_click_mask, get_texture_click_mask
 
 func _get_property_list():
@@ -31,7 +33,9 @@ func _get_property_list():
 		{ name = "Textures", type = TYPE_NIL, usage = PROPERTY_USAGE_GROUP },
 		{ name = "texture_normal", type = TYPE_OBJECT, hint = PROPERTY_HINT_RESOURCE_TYPE, hint_string = "Texture" },
 		{ name = "texture_pressed", type = TYPE_OBJECT, hint = PROPERTY_HINT_RESOURCE_TYPE, hint_string = "Texture" },
+		{ name = "texture_hover", type = TYPE_OBJECT, hint = PROPERTY_HINT_RESOURCE_TYPE, hint_string = "Texture" },
 		{ name = "texture_disabled", type = TYPE_OBJECT, hint = PROPERTY_HINT_RESOURCE_TYPE, hint_string = "Texture" },
+		{ name = "texture_focused", type = TYPE_OBJECT, hint = PROPERTY_HINT_RESOURCE_TYPE, hint_string = "Texture" },
 		{ name = "texture_click_mask", type = TYPE_OBJECT, hint = PROPERTY_HINT_RESOURCE_TYPE, hint_string = "BitMap" }
 	]
 
@@ -64,6 +68,11 @@ func set_texture_normal(value):
 	_texture_changed()
 
 
+func set_texture_hover(value):
+	texture_hover = value
+	_texture_changed()
+
+
 func set_texture_pressed(value):
 	texture_pressed = value
 	_texture_changed()
@@ -71,6 +80,11 @@ func set_texture_pressed(value):
 
 func set_texture_disabled(value):
 	texture_disabled = value
+	_texture_changed()
+
+
+func set_texture_focused(value):
+	texture_focused = value
 	_texture_changed()
 
 
@@ -89,10 +103,14 @@ func is_flipped_v():
 	return flip_v
 func get_texture_normal():
 	return texture_normal
+func get_texture_hover():
+	return texture_hover
 func get_texture_pressed():
 	return texture_pressed
 func get_texture_disabled():
 	return texture_disabled
+func get_texture_focused():
+	return texture_focused
 func get_texture_click_mask():
 	return texture_click_mask
 
@@ -109,6 +127,8 @@ func _notification(p_what: int) -> void:
 	match p_what:
 		NOTIFICATION_DRAW:
 			var draw_mode: int = get_draw_mode();
+			if draw_mode == DrawMode.DRAW_HOVER_PRESSED:
+				draw_mode = DrawMode.DRAW_PRESSED
 			
 			var texdraw: Texture
 			
@@ -118,10 +138,21 @@ func _notification(p_what: int) -> void:
 						texdraw = texture_normal
 				DrawMode.DRAW_PRESSED:
 					if texture_pressed == null:
-						if is_instance_valid(texture_normal):
-							texdraw = texture_normal
+						if texture_hover == null:
+							if is_instance_valid(texture_normal):
+								texdraw = texture_normal
+						else:
+							texdraw = texture_hover
 					else:
 						texdraw = texture_pressed
+				DrawMode.DRAW_HOVER:
+					if texture_hover == null:
+						if is_instance_valid(texture_pressed) and is_button_pressed():
+							texdraw = texture_pressed
+						elif is_instance_valid(texture_normal):
+							texdraw = texture_normal
+					else:
+						texdraw = texture_hover
 				DrawMode.DRAW_DISABLED:
 					if texture_disabled == null:
 						if is_instance_valid(texture_normal):
@@ -248,4 +279,4 @@ func has_point(p_point: Vector2):
 		
 		return texture_click_mask.get_bitv(point)
 	
-	return _in_rect(p_point)
+	return get_global_rect().has_point(p_point)

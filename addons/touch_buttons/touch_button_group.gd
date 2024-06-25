@@ -1,5 +1,6 @@
 tool
-class_name TouchButtonGroup extends Resource
+class_name TouchButtonGroup, "res://addons/touch_buttons/icons/icon_touch_button_group.png"
+extends Resource
 
 
 signal pressed(button)

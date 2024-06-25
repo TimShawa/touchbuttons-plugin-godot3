@@ -1,5 +1,6 @@
 tool
-class_name TouchTextureButton extends TouchBaseButton
+class_name TouchTextureButton, "res://addons/touch_buttons/icons/icon_touch_texture_button.png"
+extends TouchBaseButton
 
 enum StretchMode {
 	STRETCH_SCALE,

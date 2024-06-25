@@ -1,5 +1,6 @@
 tool
-class_name TouchBaseButton extends Control
+class_name TouchBaseButton, "res://addons/touch_buttons/icons/icon_touch_base_button.png"
+extends Control
 
 
 signal button_down

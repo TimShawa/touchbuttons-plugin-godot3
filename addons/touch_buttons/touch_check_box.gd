@@ -1,5 +1,6 @@
 tool
-class_name TouchCheckBox extends TouchButton
+class_name TouchCheckBox, "res://addons/touch_buttons/icons/icon_touch_check_box.png"
+extends TouchButton
 
 
 func _init(text := ""):

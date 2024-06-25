@@ -1,5 +1,6 @@
 tool
-class_name TouchButton extends TouchBaseButton
+class_name TouchButton, "res://addons/touch_buttons/icons/icon_touch_button.png"
+extends TouchBaseButton
 
 
 enum TextAlign { ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT }

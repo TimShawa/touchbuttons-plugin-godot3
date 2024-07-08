@@ -147,11 +147,12 @@ func get_passby_press():
 
 func _emit_pressed():
 	emit_signal("button_down")
-	
-	if is_toggle_mode():
+
+	if press_mode != PressMode.MODE_CLICK:
 		emit_signal("toggled", true)
-		if is_instance_valid(button_group):
-			button_group.emit_signal("pressed", self)
+		if is_toggle_mode():
+			if is_instance_valid(button_group):
+				button_group.emit_signal("pressed", self)
 	
 	if action_mode == ActionMode.ACTION_MODE_BUTTON_PRESS:
 		emit_signal("pressed")
@@ -160,7 +161,7 @@ func _emit_pressed():
 func _emit_released():
 	emit_signal("button_up")
 	
-	if is_toggle_mode():
+	if press_mode != PressMode.MODE_CLICK:
 		emit_signal("toggled", false)
 	
 	if action_mode == ActionMode.ACTION_MODE_BUTTON_PRESS:

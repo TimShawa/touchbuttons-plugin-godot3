@@ -1,9 +1,9 @@
+addons/touch_butotons/demo
 icon.png
 icon.png.import
 Control.tscn
 addons/godunity_theme
 project.godot
-addons/touch_buttons/buttons_theme.tres
 
 # Godot 4+ specific ignores
 .godot/
@@ -19,3 +19,4 @@ export_presets.cfg
 # Mono-specific ignores
 .mono/
 mono_crash.*.json
+addons/touch_buttons/demo/demo.tscn

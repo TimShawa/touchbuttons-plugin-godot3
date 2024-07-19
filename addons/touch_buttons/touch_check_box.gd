@@ -57,3 +57,7 @@ func _get_minimum_size() -> Vector2:
 		size.x += get_theme_item("constant", "hseparation", _theme_type)
 	
 	return size
+
+
+func is_node_ready():
+	return .is_node_ready() and is_instance_valid(_n_check())

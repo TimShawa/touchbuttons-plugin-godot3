@@ -299,3 +299,10 @@ func has_theme_item(item: String, name: String, theme_type: String = ""):
 
 func _init(text := ""):
 	set_text(text)
+
+func is_node_ready():
+	return is_instance_valid(_n_control()) \
+		and is_instance_valid(_n_hbox()) \
+		and is_instance_valid(_n_icon()) \
+		and is_instance_valid(_n_panel()) \
+		and is_instance_valid(_n_text())
